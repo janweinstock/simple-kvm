@@ -10,10 +10,12 @@ namespace svm {
     }
 
     void cpu::push_regs() {
-        if (ioctl(m_fd, KVM_SET_SREGS, &sysregs) < 0)
-            PERROR("KVM_SET_SREGS");
+        if ((regs.rflags & 0x2) != 0x2)
+            ERROR("flags corrupted");
         if (ioctl(m_fd, KVM_SET_REGS, &regs) < 0)
             PERROR("KVM_SET_REGS");
+        if (ioctl(m_fd, KVM_SET_SREGS, &sysregs) < 0)
+            PERROR("KVM_SET_SREGS");
     }
 
     void cpu::rd_io(u16 port, u8* dest, u64 size) {
@@ -56,6 +58,9 @@ namespace svm {
             PERROR("mmap kvm_run");
 
         pop_regs();
+
+        if ((regs.rflags & 0x2) != 0x2)
+            regs.rflags |= 0x2;
     }
 
     cpu::~cpu() {
@@ -96,14 +101,21 @@ namespace svm {
                break;
             }
 
-            case KVM_EXIT_INTERNAL_ERROR:
-                ERROR("kvm internal error");
+            case KVM_EXIT_FAIL_ENTRY: {
+                u64 r = (u64)m_run->fail_entry.hardware_entry_failure_reason;
+                ERROR("KVM_EXIT_FAIL_ENTRY: 0x%lx", r);
+            }
+
+            case KVM_EXIT_INTERNAL_ERROR: {
+                u32 err = (u32)m_run->internal.suberror;
+                ERROR("KVM_INTERNAL_ERROR: 0x%x", err);
+            }
 
             case KVM_EXIT_SHUTDOWN:
-                ERROR("kvm exit shutdown");
+                ERROR("KVM_EXIT_SHUTDOWN");
 
             default:
-                ERROR("unknown exit reason: %d", m_run->exit_reason);
+                ERROR("unknown kvm exit reason: %d", m_run->exit_reason);
             }
         }
     }
