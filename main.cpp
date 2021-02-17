@@ -16,7 +16,7 @@ int main() {
     helper_setup_page_tables(cpu, mem);
     helper_setup_segment_registers(cpu);
 
-    printf("executing...\n");
+    printf("simulating...\n");
     cpu.execute();
 
     return 0;
