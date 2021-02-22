@@ -1,7 +1,9 @@
 /svm
-/guest
+/hello/hello
+/dhrystone/dhystone
 
 .project
 .cproject
 .settings/
 
+*~
