@@ -31,7 +31,7 @@ int strcmp(const char* p1, const char* p2) {
     do {
         c1 = (unsigned char) *s1++;
         c2 = (unsigned char) *s2++;
-	if (c1 == '\0')
+        if (c1 == '\0')
             return c1 - c2;
     } while (c1 == c2);
     return c1 - c2;
@@ -65,7 +65,7 @@ void putchar(int c) {
     syscall(_NR_write, 1, (long)buf, 1);
 #endif
 }
-  
+
 unsigned long time() {
     unsigned int hi, lo;
     asm volatile("rdtsc" : "=a" (lo), "=d" (hi));
@@ -78,11 +78,12 @@ void _start() {
 }
 
 void exit(int code) {
-#ifdef BAREMETAL
     while (1) {
+#ifdef BAREMETAL
         asm("hlt" : : "a" (code) : "memory");
-    }
 #else
-    syscall(_NR_exit, code, 0, 0);
+        syscall(_NR_exit, code, 0, 0);
 #endif
+    }
 }
+

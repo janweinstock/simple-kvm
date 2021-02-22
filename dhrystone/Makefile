@@ -1,16 +1,19 @@
-CFLAGS = -Os -DTIME -DBAREMETAL -Wno-implicit-function-declaration -Wno-implicit-int
+CFLAGS = -Os -DTIME -Wno-implicit-function-declaration -Wno-implicit-int
 
-SOURCES = dhry_0.c dhry_1.c dhry_2.c ee_printf.c
+SOURCES = init.c dhry_1.c dhry_2.c ee_printf.c
 
 .PHONY: all clean
 
-all: dhrystone
+all: dhrystone dhrystone_host
 
 clean:
-	$(RM) dhrystone
+	$(RM) dhrystone dhrystone_native
 
 dhrystone: $(SOURCES) dhry.h linker.ld
-	$(CC) $(CFLAGS) -nostdlib -ffreestanding -fno-pic -o $@ -T linker.ld $(SOURCES)
+	$(CC) $(CFLAGS) -DBAREMETAL -nostdlib -ffreestanding -fno-pic -o $@ -T linker.ld $(SOURCES)
+
+dhrystone_host: $(SOURCES) dhry.h
+	$(CC) $(CFLAGS) -nostdlib -ffreestanding -o $@ $(SOURCES)
 
 disas: dhrystone
 	objdump -D -b binary -m i386:x86-64 $^

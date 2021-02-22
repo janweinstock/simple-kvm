@@ -1,6 +1,7 @@
 /svm
 /hello/hello
-/dhrystone/dhystone
+/dhrystone/dhrystone
+/dhrystone/dhrystone_host
 
 .project
 .cproject

@@ -198,6 +198,57 @@ void main()
 #endif
 
   ee_printf ("Execution ends\n");
+  ee_printf ("\n");
+  ee_printf ("Final values of the variables used in the benchmark:\n");
+  ee_printf ("\n");
+  ee_printf ("Int_Glob:            %d\n", Int_Glob);
+  ee_printf ("        should be:   %d\n", 5);
+  ee_printf ("Bool_Glob:           %d\n", Bool_Glob);
+  ee_printf ("        should be:   %d\n", 1);
+  ee_printf ("Ch_1_Glob:           %c\n", Ch_1_Glob);
+  ee_printf ("        should be:   %c\n", 'A');
+  ee_printf ("Ch_2_Glob:           %c\n", Ch_2_Glob);
+  ee_printf ("        should be:   %c\n", 'B');
+  ee_printf ("Arr_1_Glob[8]:       %d\n", Arr_1_Glob[8]);
+  ee_printf ("        should be:   %d\n", 7);
+  ee_printf ("Arr_2_Glob[8][7]:    %d\n", Arr_2_Glob[8][7]);
+  ee_printf ("        should be:   Number_Of_Runs + 10\n");
+  ee_printf ("Ptr_Glob->\n");
+  ee_printf ("  Ptr_Comp:          %lu\n", (unsigned long) Ptr_Glob->Ptr_Comp);
+  ee_printf ("        should be:   (implementation-dependent)\n");
+  ee_printf ("  Discr:             %d\n", Ptr_Glob->Discr);
+  ee_printf ("        should be:   %d\n", 0);
+  ee_printf ("  Enum_Comp:         %d\n", Ptr_Glob->variant.var_1.Enum_Comp);
+  ee_printf ("        should be:   %d\n", 2);
+  ee_printf ("  Int_Comp:          %d\n", Ptr_Glob->variant.var_1.Int_Comp);
+  ee_printf ("        should be:   %d\n", 17);
+  ee_printf ("  Str_Comp:          %s\n", Ptr_Glob->variant.var_1.Str_Comp);
+  ee_printf ("        should be:   DHRYSTONE PROGRAM, SOME STRING\n");
+  ee_printf ("Next_Ptr_Glob->\n");
+  ee_printf ("  Ptr_Comp:          %lu\n", (unsigned long) Next_Ptr_Glob->Ptr_Comp);
+  ee_printf ("        should be:   (implementation-dependent), same as above\n");
+  ee_printf ("  Discr:             %d\n", Next_Ptr_Glob->Discr);
+  ee_printf ("        should be:   %d\n", 0);
+  ee_printf ("  Enum_Comp:         %d\n", Next_Ptr_Glob->variant.var_1.Enum_Comp);
+  ee_printf ("        should be:   %d\n", 1);
+  ee_printf ("  Int_Comp:          %d\n", Next_Ptr_Glob->variant.var_1.Int_Comp);
+  ee_printf ("        should be:   %d\n", 18);
+  ee_printf ("  Str_Comp:          %s\n",
+                                Next_Ptr_Glob->variant.var_1.Str_Comp);
+  ee_printf ("        should be:   DHRYSTONE PROGRAM, SOME STRING\n");
+  ee_printf ("Int_1_Loc:           %d\n", Int_1_Loc);
+  ee_printf ("        should be:   %d\n", 5);
+  ee_printf ("Int_2_Loc:           %d\n", Int_2_Loc);
+  ee_printf ("        should be:   %d\n", 13);
+  ee_printf ("Int_3_Loc:           %d\n", Int_3_Loc);
+  ee_printf ("        should be:   %d\n", 7);
+  ee_printf ("Enum_Loc:            %d\n", Enum_Loc);
+  ee_printf ("        should be:   %d\n", 1);
+  ee_printf ("Str_1_Loc:           %s\n", Str_1_Loc);
+  ee_printf ("        should be:   DHRYSTONE PROGRAM, 1'ST STRING\n");
+  ee_printf ("Str_2_Loc:           %s\n", Str_2_Loc);
+  ee_printf ("        should be:   DHRYSTONE PROGRAM, 2'ND STRING\n");
+  ee_printf ("\n");
 
   User_Time = End_Time - Begin_Time;
 
@@ -329,5 +380,4 @@ register int    l;
         while (l--) *d++ = *s++;
 }
 #endif
-
 
